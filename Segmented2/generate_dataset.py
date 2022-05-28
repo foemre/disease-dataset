@@ -163,11 +163,11 @@ def create_dataset(imgs, vallimit, testlimit):
         valcount += 1
     elif valcount >= vallimit and testcount < testlimit:
         path_to_write = os.path.join(dst_test_img, str(count) + '.jpg')
-        cv2.imwrite(path_to_write, bg, [int(cv2.IMWRITE_JPEG_QUALITY), 60])
+        cv2.imwrite(path_to_write, bg, [int(cv2.IMWRITE_JPEG_QUALITY), 80])
         testcount += 1
     else:
         path_to_write = os.path.join(dst_train_img, str(count) + '.jpg')
-        cv2.imwrite(path_to_write, bg, [int(cv2.IMWRITE_JPEG_QUALITY), 60])
+        cv2.imwrite(path_to_write, bg, [int(cv2.IMWRITE_JPEG_QUALITY), 80])
     count += 1
 
 if __name__ == "__main__":
