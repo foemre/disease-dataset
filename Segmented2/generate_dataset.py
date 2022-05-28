@@ -22,7 +22,7 @@ def make_dir(path):
 
 root = os.getcwd()
 parent = os.path.join(root, os.path.pardir)
-dataset_folders = ['Bacterial_spot', 'healthy', 'Early_blight', 'Two-spotted_spider_mite', 'Yellow_Leaf_Curl_Virus']
+dataset_folders = ['Bacterial_spot', 'Early_blight', 'Healthy', 'Late_blight', 'Leaf_Mold', 'Mosaic_virus', 'Septoria_leaf_spot', 'Target_Spot', 'Two-spotted_spider_mite', 'Yellow_Leaf_Curl_Virus']
 background_folder = 'complex_background'
 filter_folder = 'filters'
 backgrounds = [os.path.join(parent, background_folder, item) for item in os.listdir(os.path.join(parent, background_folder))]
