@@ -64,19 +64,21 @@ count = 0
 # What I want is :
 # Generate images with all images, but only label those that are in "folders"
 # Create list of lists of 4-7 elements
-def create_dataset(imgs, vallimit, testlimit):
+def create_dataset(imgs, size, vallimit, testlimit):
     global valcount, testcount, cnt, count
     bg = random.choice(backgrounds)
     bg = cv2.imread(bg)
     if bg.shape[0] < bg.shape[1]:
-        bg = cv2.resize(bg, (1600,1200))
+        bg = cv2.resize(bg, (int(800*size),int(600*size)))
     else:
-        bg = cv2.resize(bg, (1200,1600))
-    b_rows = np.linspace(0 + random.randint(0,127), bg.shape[0]-332-random.randint(1,32), num=len(imgs), dtype=np.uint32).tolist()
-    b_cols = np.linspace(0 + random.randint(0,127), bg.shape[1]-332-random.randint(1,32), num=len(imgs), dtype=np.uint32).tolist()
+        bg = cv2.resize(bg, (int(600*size),int(800*size)))
+    b_rows = np.linspace(0 + random.randint(0,int(64*size)), bg.shape[0]-int(166*size)-random.randint(1,int(16*size)), num=len(imgs), dtype=np.uint32).tolist()
+    b_cols = np.linspace(0 + random.randint(0,int(64*size)), bg.shape[1]-int(166*size)-random.randint(1,int(16*size)), num=len(imgs), dtype=np.uint32).tolist()    
+#b_rows = np.linspace(0 + random.randint(0,int(64*size)), bg.shape[0]-int(166*size)-random.randint(1,int(16*size)), num=len(imgs), dtype=np.uint32).tolist()
+ #   b_cols = np.linspace(0 + random.randint(0,int(64*size)), bg.shape[1]-int(166*size)-random.randint(1,int(16*size)), num=len(imgs), dtype=np.uint32).tolist()
     for img in imgs:
         image = cv2.imread(img)
-        scale = random.random()/2 + 0.8
+        scale = (random.random()/4 + 0.4)*size
         if random.random() < 0.5:
             (h, w) = image.shape[:2]
             (cX, cY) = (w // 2, h // 2)
@@ -174,7 +176,9 @@ if __name__ == "__main__":
     description = f"Generate dataset, num: number of images"
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("--num", type=int, default=2000, help="Number of images to generate")
+    parser.add_argument("--size", type=int, default=800, help="Image size")
     args = parser.parse_args()
+    size = args.size/800
     vallimit = int(args.num * 0.15)
     testlimit = int(args.num * 0.15)
     #multithreaded
@@ -186,7 +190,7 @@ if __name__ == "__main__":
     with tqdm.tqdm(total=args.num) as pbar:
         for _ in range(args.num):
             grp = random.sample(images, random.randint(4,7))
-            create_dataset(grp, vallimit, testlimit)
+            create_dataset(grp, size, vallimit, testlimit)
             pbar.update()
     
     
