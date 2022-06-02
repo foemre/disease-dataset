@@ -112,8 +112,8 @@ def create_dataset(imgs, size, vallimit, testlimit):
         img_fg = cv2.bitwise_and(image,image, mask = mask)
         dst = cv2.add(bg_bg, img_fg, dtype=cv2.CV_8UC3)
         
-        if random.random() < 0.5:
-            dst = cv2.GaussianBlur(dst,(3,3),0)
+        #if random.random() < 0.5:
+            #dst = cv2.GaussianBlur(dst,(3,3),0)
         bg[b_row:b_row + rows, b_col:b_col + cols] = dst
         if imgclass in dataset_folders:
             w = image.shape[1]
